@@ -36,11 +36,10 @@ static inline int	itoa_cpy(uint64_t n, char *dest)
 	return (len);
 }
 
-static void	cpy_state(char *restrict dst, const char *restrict src, int len)
+static void	cpy_state(char *restrict dst, const char *restrict src)
 {
 	uint64_t	*dstlong;
 	uint64_t	*srclong;
-	int			i;
 
 	dstlong = (uint64_t *)dst;
 	srclong = (uint64_t *)src;
@@ -48,19 +47,15 @@ static void	cpy_state(char *restrict dst, const char *restrict src, int len)
 	dstlong[1] = srclong[1];
 	dstlong[2] = srclong[2];
 	dstlong[3] = srclong[3];
-	i = 16;
-	while (i < len)
-	{
-		dst[i] = src[i];
-		i++;
-	}
 }
 
 void	printp(uint64_t us, int num, int output)
 {
-	static const char	*messages[5] = {"\033[90m has taken a fork\033[0m\n",
-		"\033[93m is eating\033[0m\n", "\033[94m is sleeping\033[0m\n",
-		"\033[92m is thinking\033[0m\n", "\033[31m died\033[0m\n"};
+	static const char	*messages[5] = {"\033[90m has taken a fork\033[0m\n\0\0\0\0",
+		"\033[93m is eating\033[0m\n\0\0\0\0\0\0\0\0\0\0\0",
+		"\033[94m is sleeping\033[0m\n\0\0\0\0\0\0\0\0\0",
+		"\033[92m is thinking\033[0m\n\0\0\0\0\0\0\0\0\0",
+		"\033[31m died\033[0m\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"};
 	const int			lens[5] = {27, 20, 22, 22, 15};
 	int					len;
 	char				toprint[52];
@@ -69,7 +64,7 @@ void	printp(uint64_t us, int num, int output)
 	toprint[len] = ' ';
 	len++;
 	len += itoa_cpy(num, toprint + len);
-	cpy_state(toprint + len, messages[output], lens[output]);
+	cpy_state(toprint + len, messages[output]);
 	len += lens[output];
 	write(1, toprint, len);
 }
