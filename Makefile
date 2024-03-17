@@ -2,7 +2,7 @@ NAME = philo
 NAME_BONUS = philo_bonus
 
 COMP = clang
-CFLAGS = -Wall -Wextra -g #-Werror
+CFLAGS = -Wall -Wextra #-Werror
 
 SRC_DIR = src/
 OBJ_DIR = obj/

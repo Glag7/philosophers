@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:31:53 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/03/15 18:15:29 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:17:11 by glag             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,23 @@ static void	cpy_state(char *restrict dst, const char *restrict src)
 	dstlong[0] = srclong[0];
 	dstlong[1] = srclong[1];
 	dstlong[2] = srclong[2];
-	dstlong[3] = srclong[3];
 }
 
 void	printp(uint64_t us, int num, int output)
 {
-	static const char	*messages[5] = {"\033[90m has taken a fork\033[0m\n\0\0\0\0",
-		"\033[93m is eating\033[0m\n\0\0\0\0\0\0\0\0\0\0\0",
-		"\033[94m is sleeping\033[0m\n\0\0\0\0\0\0\0\0\0",
-		"\033[92m is thinking\033[0m\n\0\0\0\0\0\0\0\0\0",
-		"\033[31m died\033[0m\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"};
-	const int			lens[5] = {27, 20, 22, 22, 15};
+	static const char	*colors[5] = {"\033[90m\0\0", "\033[93m\0\0",
+		"\033[94m\0\0", "\033[92m\0\0", "\033[31m\0\0"};
+	static const char	*messages[5] = {" has taken a fork\033[0m\n\0",
+		" is eating\033[0m\n\0\0\0\0\0\0\0\0",
+		" is sleeping\033[0m\n\0\0\0\0\0\0",
+		" is thinking\033[0m\n\0\0\0\0\0\0",
+		" died\033[0m\n\0\0\0\0\0\0\0\0\0\0\0\0\0"};
+	const int			lens[5] = {22, 15, 17, 17, 10};
 	int					len;
 	char				toprint[52];
 
-	len = itoa_cpy(us / 1000, toprint);
+	((uint64_t *)toprint)[0] = ((uint64_t *)colors[output])[0];
+	len = 5 + itoa_cpy(us / 1000, toprint + 5);
 	toprint[len] = ' ';
 	len++;
 	len += itoa_cpy(num, toprint + len);
