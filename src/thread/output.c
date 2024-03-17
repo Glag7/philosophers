@@ -36,13 +36,13 @@ static inline int	itoa_cpy(uint64_t n, char *dest)
 	return (len);
 }
 
-static void	cpy_state(char *restrict dst, const char *restrict src)
+static inline void	cpy_state(void *restrict dst, void *restrict src)
 {
 	uint64_t	*dstlong;
 	uint64_t	*srclong;
 
-	dstlong = (uint64_t *)dst;
-	srclong = (uint64_t *)src;
+	dstlong = dst;
+	srclong = src;
 	dstlong[0] = srclong[0];
 	dstlong[1] = srclong[1];
 	dstlong[2] = srclong[2];
