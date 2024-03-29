@@ -34,14 +34,12 @@ times, the simulation stops. If not specified, the simulation stops when a
 philosopher dies.  
 
 __Philo__  
-
 • Each philosopher should be a thread.  
 • There is one fork between each pair of philosophers. Therefore, if there are several
 philosophers, each philosopher has a fork on their left side and a fork on their right
 side. If there is only one philosopher, there should be only one fork on the table  
 
 __Philo_bonus__  
-
 • All the forks are put in the middle of the table.  
 • They have no states in memory but the number of available forks is represented by
 a semaphore.  
