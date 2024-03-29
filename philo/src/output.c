@@ -6,11 +6,11 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 16:31:53 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/03/17 18:17:11 by glag             ###   ########.fr       */
+/*   Updated: 2024/03/19 18:03:43 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "thread/philo.h"
+#include "philo.h"
 
 static inline int	itoa_cpy(uint64_t n, char *dest)
 {
@@ -36,10 +36,10 @@ static inline int	itoa_cpy(uint64_t n, char *dest)
 	return (len);
 }
 
-static inline void	cpy_state(void *restrict dst, void *restrict src)
+static inline void	cpy_state(void *restrict dst, const void *restrict src)
 {
-	uint64_t	*dstlong;
-	uint64_t	*srclong;
+	uint64_t		*dstlong;
+	const uint64_t	*srclong;
 
 	dstlong = dst;
 	srclong = src;
@@ -65,7 +65,7 @@ void	printp(uint64_t us, int num, int output)
 	len = 5 + itoa_cpy(us / 1000, toprint + 5);
 	toprint[len] = ' ';
 	len++;
-	len += itoa_cpy(num, toprint + len);
+	len += itoa_cpy(num + 1, toprint + len);
 	cpy_state(toprint + len, messages[output]);
 	len += lens[output];
 	write(1, toprint, len);

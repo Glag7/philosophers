@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "thread/philo.h"
+#include "philo.h"
 
 static int32_t	ft_atoi(char *s, uint32_t *n, uint32_t mult, uint64_t max)
 {

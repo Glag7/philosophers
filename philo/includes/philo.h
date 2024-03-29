@@ -6,7 +6,7 @@
 /*   By: glaguyon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:05:00 by glaguyon          #+#    #+#             */
-/*   Updated: 2024/03/15 18:07:53 by glaguyon         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:32:50 by glaguyon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,34 @@ typedef struct s_data
 
 typedef struct s_meal
 {
-	uint32_t		neat;
-	struct timeval	lasteat;
+	uint32_t	neat;
+	uint64_t	lasteat;
 }	t_meal;
+
+typedef struct s_fork
+{
+	pthread_mutex_t	mutex;
+	char			clean;
+}	t_fork;
 
 typedef struct s_pdata
 {
-	t_data		data;
-	char		*forks;
-	t_meal		*meals;
-	pthread_t	*threads;
+	t_data			data;
+	t_fork			*forks;
+	t_meal			*meals;
+	pthread_t		*threads;
+	pthread_mutex_t	run;
+	struct timeval	start;
+	uint16_t		eating;
 }	t_pdata;
 
 typedef struct s_philo
 {
 	t_pdata		*pdata;
 	uint16_t	num;
+	t_fork		*fork;
+	t_fork		*nfork;
+	t_meal		*meal;
 }	t_philo;
 
 //start
@@ -74,6 +86,8 @@ void	ft_perror(char *s);
 
 //routine
 void	*routine(void *philo_);
+void	routine_loop(t_philo *philo, t_pdata *pdata,
+			uint16_t n, struct timeval start);
 
 //output
 void	printp(uint64_t us, int num, int output);
